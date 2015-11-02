@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="JBehave JUnit Runner"
+            class="tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferencePage"
+            id="tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="tech.idehub.eclipse.jbehave.junit.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   
+   <extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+          label="JBehave JUnit Test"
+          icon="icons/jbehave-junit.png"
+          helpContextId=""
+          class="tech.idehub.eclipse.jbehave.junit.launcher.JBehaveJUnitLaunchShortcut"
+          modes="run, debug"
+          id="tech.idehub.eclipse.jbehave.junit.launcher.JBehaveJUnitLaunchShortcut">
+          
+       <contextualLaunch>
+          <enablement>
+             <with variable="selection">
+                <count value="1"/>
+                <iterate operator="and">
+                   <adapt type="org.eclipse.core.runtime.IAdaptable">
+                      <test property="tech.idehub.eclipse.jbehave.junit.resources.canLaunchJBehave" />
+                      <!--
+                      <test property="org.eclipse.jdt.core.isInJavaProject"/>
+                      <test property="org.eclipse.jdt.core.hasTypeOnClasspath" value="junit.framework.Test"/> -->
+                   </adapt>
+                </iterate>
+             </with>
+          </enablement>
+       </contextualLaunch>
+       
+       <configurationType
+             id="org.eclipse.jdt.junit.launchconfig">
+       </configurationType>
+       <description
+             description="JBehave JUnit"
+             mode="debug">
+       </description>
+       <description
+             description="JBehave JUnit"
+             mode="run">
+       </description>
+    </shortcut>
+</extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="tech.idehub.eclipse.jbehave.junit.launcher.JBehaveJUnitLaunchableTester"
+            id="tech.idehub.eclipse.jbehave.junit.launcher.JBehaveJUnitLaunchableTester"
+            namespace="tech.idehub.eclipse.jbehave.junit.resources"
+            properties="canLaunchJBehave"
+            type="org.eclipse.core.runtime.IAdaptable">
+      </propertyTester>
+   </extension>
+</plugin>

@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <artifactId>tech.idehub.eclipse.jbehave.update-site</artifactId>
+  <packaging>eclipse-repository</packaging>
+  <name>tech.idehub.eclipse.jbehave.update-site</name>
+  <description>tech.idehub.eclipse.jbehave.update-site</description>
+  
+  <parent>
+   <groupId>tech.idehub.eclipse</groupId>
+  <artifactId>jbehave</artifactId>
+  <version>0.0.1</version>
+   <relativePath>../../</relativePath>
+  </parent>
+  
+   <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/repository</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>.</directory>
+                                    <includes>
+                                        <include>category.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
