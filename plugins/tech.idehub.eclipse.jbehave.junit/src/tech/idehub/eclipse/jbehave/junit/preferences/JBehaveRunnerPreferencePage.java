@@ -1,7 +1,5 @@
 package tech.idehub.eclipse.jbehave.junit.preferences;
 
-import java.util.Iterator;
-
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;

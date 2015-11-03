@@ -39,30 +39,16 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
 			  IFileEditorInput editor = (IFileEditorInput) receiver;
 			  return canLaunchJBehaveResource(editor.getFile());	      			  
 		  } else  if (receiver instanceof IStructuredSelection) {
-	        IStructuredSelection ssel = (IStructuredSelection) receiver;
-	        Object obj = ssel.getFirstElement();
-	        if (obj instanceof IJavaElement) {
-				IJavaElement element= (IJavaElement) obj;				
-				switch (element.getElementType()) {
-					case IJavaElement.PACKAGE_FRAGMENT:
-					  return canLaunchJBehaveResource(element.getResource());
-					default:
-						return false;
-					
-				}
-			} 
+	        IStructuredSelection selection = (IStructuredSelection) receiver;   
+	        if (ResourceNameResolver.resolve(selection) != null) {
+	        	return true;
+	        }
 		  } else if (receiver instanceof IResource) {
 				IResource resource = (IResource) receiver;
-	        	return canLaunchJBehaveResource(resource);	        	
+	        	return ResourceNameResolver.resolve(resource) != null && canLaunchJBehaveResource(resource);	        	
 	      } else if (receiver instanceof IJavaElement) {
 				IJavaElement element= (IJavaElement) receiver;				
-				switch (element.getElementType()) {
-					case IJavaElement.PACKAGE_FRAGMENT:
-					  return canLaunchJBehaveResource(element.getResource());
-					default:
-						return false;
-					
-				}
+				return ResourceNameResolver.resolve(element) != null && canLaunchJBehaveResource(element.getResource());	 
 		  }   
 
 		return false;
@@ -70,7 +56,11 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
 	
 	private boolean canLaunchJBehaveResource(IResource resource)  {
 
-		if (resource.isVirtual() || resource.isDerived() || resource.isLinked() || resource.isHidden()) {
+		if (resource.isVirtual() 
+				|| resource.isDerived() 
+				|| resource.isLinked() 
+				|| resource.isHidden()
+				|| !resource.isAccessible()) {
 			return false;
 		}
 		

@@ -50,13 +50,14 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.debug.ui.ILaunchShortcut#launch(org.eclipse.ui.IEditorPart, java.lang.String)
-	 */
+ 
 	public void launch(IEditorPart editor, String mode) {
 		
-		try {
-			performLaunch(getProjectName(editor), getResourceLocation(editor),  mode);
+		try {			
+			IFileEditorInput input = (IFileEditorInput) editor.getEditorInput() ;
+		    IFile file = input.getFile();
+		    String resourceLocation = ResourceNameResolver.resolve(file);
+			performLaunch(getProjectName(editor), resourceLocation,  mode);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		} catch (CoreException e) {
@@ -65,14 +66,12 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		
 	}
 
-	 
-	/* (non-Javadoc)
-	 * @see org.eclipse.debug.ui.ILaunchShortcut#launch(org.eclipse.jface.viewers.ISelection, java.lang.String)
-	 */
+
 	public void launch(ISelection selection, String mode) {
 		
 		try {
-			performLaunch(getProjectName(selection), getResourceLocation(selection), mode);
+			String resourceLocation = ResourceNameResolver.resolve(selection);
+			performLaunch(getProjectName(selection), resourceLocation, mode);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		} catch (CoreException e) {
@@ -106,7 +105,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		String mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_RUNNER_CLASS);
 		String storyPathSysProperty = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY);
 		
-		final String testName = storyPath.toLowerCase().replace(File.pathSeparatorChar, '_');
+		final String testName = storyPath.toLowerCase().replace(File.pathSeparatorChar, '.');
 		final String containerHandleId = "";
 
 		ILaunchConfigurationType configType= getLaunchManager().getLaunchConfigurationType(getLaunchConfigurationTypeId());
@@ -163,6 +162,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 	private String getResourceLocation(IEditorPart element) {
 		IFileEditorInput input = (IFileEditorInput) element.getEditorInput() ;
 	    IFile file = input.getFile();
+ 
 		return file.getProjectRelativePath().toString().replace("src/test/resources", "");
 	}
 	
@@ -183,28 +183,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		return null;
 	}
 	
-	private String getResourceLocation(ISelection selection) throws CoreException {
-		if (selection instanceof IStructuredSelection) {
-	        IStructuredSelection ssel = (IStructuredSelection) selection;
-	        Object obj = ssel.getFirstElement();
-	        if (obj instanceof IJavaElement) {
-				IJavaElement element= (IJavaElement) obj;
-				if (IJavaElement.PACKAGE_FRAGMENT == element.getElementType()) {
-					return element.getResource().getProjectRelativePath().toString().replace("src/test/resources", "").concat("/**/*.story");
-				}
-			} else if (obj instanceof IResource) {
-	        	IResource resource = (IResource) obj;
-	        	if (IResource.FILE == resource.getType()) {
-	        		return resource.getProjectRelativePath().toString().replace("src/test/resources", "");
-	        	} else if (IResource.FOLDER == resource.getType()) {
-	        		return resource.getProjectRelativePath().toString().replace("src/test/resources", "").concat("/**/*.story");
-	        	}
-	        	
-	        }
-	    }
-		return null;
-	}
-	
+	 
 	
 	private ILaunchConfiguration findExistingLaunchConfiguration(ILaunchConfigurationWorkingCopy temporary, String mode) throws InterruptedException, CoreException {
 		List<ILaunchConfiguration> candidateConfigs= findExistingLaunchConfigurations(temporary);

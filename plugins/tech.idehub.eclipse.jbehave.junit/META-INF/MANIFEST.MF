@@ -21,3 +21,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.jdt.launching
 Bundle-ClassPath: .
+Export-Package: tech.idehub.eclipse.jbehave.junit.launcher
