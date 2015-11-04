@@ -46,13 +46,7 @@
 				<version>${tycho-version}</version>
 				<configuration>
 				  <pomDependencies>consider</pomDependencies>
-					<!--target>
-						<artifact>
-							<groupId>org.jkiss.dbeaver</groupId>
-							<artifactId>mars</artifactId>
-							<version>1.0.0</version>
-						</artifact>
-					</target-->
+					
 					<environments>
 						<environment>
 							<os>win32</os>
