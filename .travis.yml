@@ -1,5 +1,6 @@
 language: java
 before_install:
+  - pwd
   - chmod +x build/install-dependencies.sh
 install: build/install-dependencies.sh
 before_script:
