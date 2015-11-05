@@ -1,1 +1,3 @@
 language: java
+install: ./build/install-dependencies.sh
+script:  ./build/run-tests.sh

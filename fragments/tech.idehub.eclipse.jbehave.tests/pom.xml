@@ -33,15 +33,6 @@
         <configuration>
           <useUIHarness>false</useUIHarness>
         </configuration>
-       <!--  <executions>
-          <execution>
-            <id>execute-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-          </execution>
-        </executions> -->
       </plugin>
     </plugins>
   </build>
