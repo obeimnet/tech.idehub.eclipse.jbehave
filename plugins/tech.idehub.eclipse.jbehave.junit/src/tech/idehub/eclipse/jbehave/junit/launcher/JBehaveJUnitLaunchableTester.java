@@ -18,7 +18,9 @@ import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
 
 public class JBehaveJUnitLaunchableTester extends PropertyTester {
 
-	private static final String  PROP_CAN_LAUNCH_JBEHAVE = "canLaunchJBehave";
+	public static final String  PROP_CAN_LAUNCH_JBEHAVE = "canLaunchJBehave";
+	
+	public static final String NAME_SPACE = "tech.idehub.eclipse.jbehave.junit.resources";
 	
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {

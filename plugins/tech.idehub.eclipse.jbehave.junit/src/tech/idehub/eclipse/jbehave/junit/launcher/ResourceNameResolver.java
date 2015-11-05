@@ -10,7 +10,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache;
 import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
 
+//TODO: replace hard codes file separator with File.separator
 class ResourceNameResolver {
+	
 	
 	static String resolve(IResource resource) {
 		PreferenceConstants.StoryNameResolverType storyNameResolverType = PreferenceConstants.StoryNameResolverType

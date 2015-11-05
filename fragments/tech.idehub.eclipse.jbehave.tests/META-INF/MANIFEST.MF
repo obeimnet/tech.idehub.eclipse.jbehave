@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Abc
+Bundle-Name: Eclipse JBehave JUnit Runner Tests
 Bundle-SymbolicName: tech.idehub.eclipse.jbehave.junit.tests
 Bundle-Version: 0.0.1
 Fragment-Host: tech.idehub.eclipse.jbehave.junit;bundle-version="0.0.1"
