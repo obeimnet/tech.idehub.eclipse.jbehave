@@ -1,7 +1,7 @@
 language: java
 before_install:
-  - chmod +x ./build/install-dependencies.sh
+  - chmod +x build/install-dependencies.sh
 install: ./build/install-dependencies.sh
 before_script:
- - chmod +x ./build/run-tests.sh
+ - chmod +x build/run-tests.sh
 script:  ./build/run-tests.sh
