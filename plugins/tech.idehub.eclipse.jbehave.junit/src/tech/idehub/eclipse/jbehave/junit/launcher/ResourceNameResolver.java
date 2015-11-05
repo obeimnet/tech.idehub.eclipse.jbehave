@@ -93,7 +93,7 @@ class ResourceNameResolver {
 			}
 		}
 
-		String resourceName = resource.getProjectRelativePath().toOSString().replaceFirst("src/test/resources", "").replaceFirst("src/test/java", "")
+		String resourceName = resource.getProjectRelativePath().toString().replaceFirst("src/test/resources", "").replaceFirst("src/test/java", "")
 				.replaceFirst("src/main/resources", "").replaceFirst("src/main/java", "");
 		switch (resource.getType()) {
 		case IResource.FILE:
