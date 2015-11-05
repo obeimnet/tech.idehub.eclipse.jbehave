@@ -4,4 +4,4 @@ install: mvn clean install -DskipTests=true
 
 script:
   - cd  ./fragments/tech.idehub.eclipse.jbehave.junit.tests
-  - mvn clean org.eclipse.tycho:tycho-surefire-plugin:test
+  - mvn clean install org.eclipse.tycho:tycho-surefire-plugin:test
