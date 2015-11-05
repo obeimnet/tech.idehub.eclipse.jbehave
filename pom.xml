@@ -10,9 +10,10 @@
   
   <modules>
   	<module>plugins/tech.idehub.eclipse.jbehave.junit</module>
-  	<module>fragments/tech.idehub.eclipse.jbehave.tests</module>
+  	<module>fragments/tech.idehub.eclipse.jbehave.junit.tests</module>
   	<module>features/tech.idehub.eclipse.jbehave.junit.feature</module>
-  	<module>product/tech.idehub.eclipse.jbehave.update-site</module> 	
+  	<module>product/tech.idehub.eclipse.jbehave.update-site</module>
+  	
   </modules>
   
   
