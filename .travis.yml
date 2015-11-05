@@ -1,8 +1,7 @@
 language: java
-before_install:
-  - pwd
-  - chmod +x build/install-dependencies.sh
-install: build/install-dependencies.sh
-before_script:
- - chmod +x build/run-tests.sh
-script:  build/run-tests.sh
+
+install: mvn clean install -DskipTests=true
+
+script:
+  - cd ../fragments/tech.idehub.eclipse.jbehave.junit.tests
+  - mvn clean install -DskipTests=true
