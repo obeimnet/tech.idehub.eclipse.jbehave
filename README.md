@@ -1,1 +1,1 @@
-[ ](https://github.com/obeimnet/tech.idehub.eclipse.jbehave/wiki)
+[Wiki](https://github.com/obeimnet/tech.idehub.eclipse.jbehave/wiki)
