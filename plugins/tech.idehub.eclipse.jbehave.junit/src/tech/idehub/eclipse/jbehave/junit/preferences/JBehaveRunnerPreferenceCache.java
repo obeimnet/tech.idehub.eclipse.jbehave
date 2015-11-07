@@ -1,4 +1,9 @@
 package tech.idehub.eclipse.jbehave.junit.preferences;
+import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_RUNNER_CLASS;
+import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_FILE_EXTENTION;
+import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_FILE_RESOLUTION_STRATEGY;
+import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY;
+import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_PATH_WITH_LEADING_SLASH;
 
 import java.util.HashMap;
 
@@ -23,5 +28,28 @@ public class JBehaveRunnerPreferenceCache {
 	
 	public synchronized  static void purge() {
 		cache.clear();
+	}
+	
+	public synchronized static String getStoryFileResolutionStrategy() {
+		 return get(P_STORY_FILE_RESOLUTION_STRATEGY);
+	}
+	
+	
+	public synchronized static String getRrunnerClass() {
+		 return get(P_RUNNER_CLASS);
+	}
+	
+	public synchronized static String getStoryFileExtention() {
+		 return get(P_STORY_FILE_EXTENTION);
+	}
+	
+	
+	public synchronized static String getStoryPathSystemProperty() {
+		 return get(P_STORY_PATH_SYSTEM_PROPERTY);
+	}
+	
+	
+	public synchronized static String getStoryPathWithLeadingSlash() {
+		 return get(P_STORY_PATH_WITH_LEADING_SLASH);
 	}
 }

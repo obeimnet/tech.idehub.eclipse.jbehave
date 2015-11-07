@@ -32,9 +32,7 @@
                 <count value="1"/>
                 <iterate operator="and">
                    <adapt type="org.eclipse.core.runtime.IAdaptable">
-                      <test property="tech.idehub.eclipse.jbehave.junit.resources.canLaunchJBehave" forcePluginActivation="true"/>
-                      <test property="org.eclipse.jdt.core.isInJavaProject"/>
-                      <test property="org.eclipse.jdt.core.hasTypeOnClasspath" value="junit.framework.Test"/> 
+                      <test property="tech.idehub.eclipse.jbehave.junit.resources.canLaunchJBehave" forcePluginActivation="true"/>                  
                    </adapt>
                 </iterate>
              </with>

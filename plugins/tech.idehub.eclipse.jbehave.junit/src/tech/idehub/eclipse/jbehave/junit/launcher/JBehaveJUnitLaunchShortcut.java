@@ -1,7 +1,6 @@
 
 package tech.idehub.eclipse.jbehave.junit.launcher;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +55,8 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		try {			
 			IFileEditorInput input = (IFileEditorInput) editor.getEditorInput() ;
 		    IFile file = input.getFile();
-		    String resourceLocation = ResourceNameResolver.resolve(file);
-			performLaunch(getProjectName(editor), resourceLocation,  mode);
+		    StoryPath storyPath = ResourceNameResolver.resolve(file);
+			performLaunch(getProjectName(editor), storyPath,  mode);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		} catch (CoreException e) {
@@ -65,13 +64,12 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		}
 		
 	}
-
 
 	public void launch(ISelection selection, String mode) {
 		
 		try {
-			String resourceLocation = ResourceNameResolver.resolve(selection);
-			performLaunch(getProjectName(selection), resourceLocation, mode);
+			StoryPath storyPath = ResourceNameResolver.resolve(selection);
+			performLaunch(getProjectName(selection), storyPath, mode);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		} catch (CoreException e) {
@@ -79,7 +77,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		}
 	}
 
-	private void performLaunch(String projectName, String storyPath, String mode) throws InterruptedException, CoreException {
+	private void performLaunch(String projectName, StoryPath storyPath, String mode) throws InterruptedException, CoreException {
 		ILaunchConfigurationWorkingCopy temparary= createLaunchConfiguration(projectName, storyPath);
 		ILaunchConfiguration config= findExistingLaunchConfiguration(temparary, mode);
 		if (config == null) {
@@ -100,12 +98,12 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 	}
 
 
-	protected ILaunchConfigurationWorkingCopy createLaunchConfiguration(String projectName, String storyPath) throws CoreException {
+	protected ILaunchConfigurationWorkingCopy createLaunchConfiguration(String projectName, StoryPath storyPath) throws CoreException {
 		    
 		String mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_RUNNER_CLASS);
 		String storyPathSysProperty = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY);
 		
-		final String testName = storyPath.toLowerCase().replace(File.pathSeparatorChar, '.');
+		final String testName = storyPath.displayName();
 		final String containerHandleId = "";
 
 		ILaunchConfigurationType configType= getLaunchManager().getLaunchConfigurationType(getLaunchConfigurationTypeId());
@@ -118,7 +116,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		wc.setAttribute(ATTR_TEST_RUNNER_KIND, JUNIT4_TEST_KIND_ID);
 		//JUnitMigrationDelegate.mapResources(wc);
 		//AssertionVMArg.setArgDefault(wc);
-		wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS, "-D" + storyPathSysProperty + "=" + storyPath);
+		wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS, "-D" + storyPathSysProperty + "=" + storyPath.jvmArgStoryPath());
 		//if (element instanceof IMethod) {
 			//wc.setAttribute(JUnitLaunchConfigurationConstants.ATTR_TEST_METHOD_NAME, element.getElementName()); // only set for methods
 		//}
@@ -159,12 +157,6 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 	    return project.getName();
 	}
 	
-	private String getResourceLocation(IEditorPart element) {
-		IFileEditorInput input = (IFileEditorInput) element.getEditorInput() ;
-	    IFile file = input.getFile();
- 
-		return file.getProjectRelativePath().toString().replace("src/test/resources", "");
-	}
 	
 	private String getProjectName(ISelection selection) {
 		

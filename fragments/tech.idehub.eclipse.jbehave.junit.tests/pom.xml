@@ -16,15 +16,21 @@
   
   <dependencies>
    <dependency>
-    <groupId>junit</groupId>
-	<artifactId>junit</artifactId>
-	<version>4.12</version>
-	<scope>test</scope>
+	    <groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.12</version>
+		<scope>test</scope>
+   </dependency>
+   <dependency>
+	   	<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>1.10.19</version>
+		<scope>test</scope>
    </dependency>
   </dependencies>
   
   <build>
-    <sourceDirectory>src</sourceDirectory>
+    <sourceDirectory>test</sourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
@@ -35,5 +41,6 @@
         </configuration>
       </plugin>
     </plugins>
+    
   </build>
 </project>

@@ -28,7 +28,18 @@ public class JBehaveRunnerPreferencePage extends FieldEditorPreferencePage imple
 		
 		FieldEditor storyPathSystemPropertyField = new StringFieldEditor(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY, "&Story Path System Property (default = jbehave.story.path):", getFieldEditorParent());
 		addField(storyPathSystemPropertyField);
-			 
+		
+		String[][] labelAndValues = {
+				{"Default", "DEFAULT"}
+				,{"Relative to Project Location", "PROJECT_RELATIVE"}
+				,{"Absolute Path", "ABSOLUTE_PATH"}
+		};
+		
+		FieldEditor storyFileResolutionStrategyField = new RadioGroupFieldEditor(PreferenceConstants.P_STORY_FILE_RESOLUTION_STRATEGY, 
+														"&Story File Location",
+														1,
+														labelAndValues, getFieldEditorParent());
+		addField(storyFileResolutionStrategyField);	 
 	}
 	
 	@Override

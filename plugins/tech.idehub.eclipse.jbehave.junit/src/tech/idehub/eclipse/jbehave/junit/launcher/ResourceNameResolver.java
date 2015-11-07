@@ -1,26 +1,29 @@
 package tech.idehub.eclipse.jbehave.junit.launcher;
 
 
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryFileExtention;
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryFileResolutionStrategy;
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryPathWithLeadingSlash;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
-import tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache;
 import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
 
-//TODO: replace hard codes file separator with File.separator
 class ResourceNameResolver {
 	
 	
-	static String resolve(IResource resource) {
-		PreferenceConstants.StoryNameResolverType storyNameResolverType = PreferenceConstants.StoryNameResolverType
-				.valueOf(JBehaveRunnerPreferenceCache.get("storyFileResolutionStrategy"));
+	static StoryPath resolve(IResource resource) {
 		
-		String retainLeadingSlash = JBehaveRunnerPreferenceCache.get("storyPathWithLeadingSlash");
+		PreferenceConstants.StoryNameResolverType storyNameResolverType = PreferenceConstants.StoryNameResolverType
+				.valueOf(getStoryFileResolutionStrategy());
+		
+		String retainLeadingSlash = getStoryPathWithLeadingSlash();
 
-		String storyPath = null;
+		StoryPath storyPath = null;
 		switch (storyNameResolverType) {
 		case ABSOLUTE_PATH:
 			storyPath = resolveAbsolutePath(resource);
@@ -32,14 +35,19 @@ class ResourceNameResolver {
 			storyPath = resolveDefault(resource);
 		}
 
-		if ((storyPath != null) && ("false".equalsIgnoreCase(retainLeadingSlash)) && (storyPath.startsWith("/"))) {
-			return storyPath.substring(1);
+		if ((storyPath != null) && storyPath.isFolder()) {
+			storyPath.setPath(storyPath.getPath().concat("_"));
+		}
+		
+		if ((storyPath != null) && ("false".equalsIgnoreCase(retainLeadingSlash)) && (storyPath.getPath().startsWith("/"))) {
+			return new StoryPath(storyPath.getPath().substring(1), storyPath.isFolder(), getStoryFileExtention());
 		}
 
+		
 		return storyPath;
 	}
 
-	static String resolve(ISelection selection) {
+	static StoryPath resolve(ISelection selection) {
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection ssel = (IStructuredSelection) selection;
 			Object obj = ssel.getFirstElement();
@@ -62,16 +70,16 @@ class ResourceNameResolver {
 		return null;
 	}
 
-	static String resolve(IJavaElement element) {
+	static StoryPath resolve(IJavaElement element) {
 		if (IJavaElement.PACKAGE_FRAGMENT == element.getElementType()) {
 			return resolve(element.getResource());
 		}
 		return null;
 	}
 
-	private static String resolveDefault(IResource resource) {
+	private static StoryPath resolveDefault(IResource resource) {
 		
-		if ((isFolder(resource)) && (resource.getName().equals("resources"))) {
+		if (isFolder(resource) && resource.getName().equals("resources")) {
 			IContainer parent = resource.getParent();
 			if ((parent != null) 
 					&& (((parent.getName().equals("test")) || (parent.getName().equals("java")))) 
@@ -79,7 +87,7 @@ class ResourceNameResolver {
 					&& (parent.getParent().getName().equals("src"))) {
 				return null;
 			}
-		} else if ((isFolder(resource)) && (((resource.getName().equals("main")) || (resource.getName().equals("test"))))) {
+		} else if (isFolder(resource) && (resource.getName().equals("main") || resource.getName().equals("test"))) {
 			IContainer parent = resource.getParent();
 			if (parent != null && parent.getName().equals("src")) {
 				if (parent.getParent() != null && parent.getParent().getName().equals(resource.getProject().getName())) {
@@ -97,29 +105,29 @@ class ResourceNameResolver {
 				.replaceFirst("src/main/resources", "").replaceFirst("src/main/java", "");
 		switch (resource.getType()) {
 		case IResource.FILE:
-			return resourceName;
+			return new StoryPath(resourceName, false, getStoryFileExtention());
 		case IResource.FOLDER:
-			return resourceName.concat("/**/*.story");
+			return new StoryPath(resourceName, true, getStoryFileExtention());
 		}
 		return null;
 	}
 
-	private static String resolveAbsolutePath(IResource resource) {
+	private static StoryPath resolveAbsolutePath(IResource resource) {
 		switch (resource.getType()) {
 		case IResource.FILE:
-			return resource.getRawLocation().toString();
+			return new StoryPath(resource.getRawLocation().toString(), false, getStoryFileExtention());
 		case IResource.FOLDER:
-			return resource.getRawLocation().toString().concat("/**/*.story");
+			return new StoryPath(resource.getRawLocation().toString(), true, getStoryFileExtention());
 		}
 		return null;
 	}
 
-	private static String resolveProjectRelative(IResource resource) {
+	private static StoryPath resolveProjectRelative(IResource resource) {
 		switch (resource.getType()) {
 		case IResource.FILE:
-			return resource.getProjectRelativePath().toString();
+			return new StoryPath(resource.getProjectRelativePath().toString(), false, getStoryFileExtention());
 		case IResource.FOLDER:
-			return resource.getProjectRelativePath().toString().concat("/**/*.story");
+			return new StoryPath(resource.getProjectRelativePath().toString(), true, getStoryFileExtention());
 		}
 		return null;
 	}

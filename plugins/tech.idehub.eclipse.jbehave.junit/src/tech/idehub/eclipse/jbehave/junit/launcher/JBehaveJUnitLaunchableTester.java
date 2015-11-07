@@ -1,5 +1,7 @@
 package tech.idehub.eclipse.jbehave.junit.launcher;
 
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryFileExtention;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +14,6 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IFileEditorInput;
-
-import tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache;
-import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
 
 public class JBehaveJUnitLaunchableTester extends PropertyTester {
 
@@ -29,13 +28,18 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
             return false;
         }
 		 
-		if (PROP_CAN_LAUNCH_JBEHAVE.equals(property)) {
-			return canLaunchJBehave(receiver);
+		try {
+			if (PROP_CAN_LAUNCH_JBEHAVE.equals(property)) {
+				return canLaunchJBehave(receiver);
+			}
+		} catch (Exception exc) {
+			;//
 		}
+		
 		return false;
 	}
 
-	private boolean canLaunchJBehave(Object receiver)  {
+	protected boolean canLaunchJBehave(Object receiver)  {
 		
 		  if (receiver instanceof IFileEditorInput) {
 			  IFileEditorInput editor = (IFileEditorInput) receiver;
@@ -66,7 +70,7 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
 			return false;
 		}
 		
-		String storyFileExtention = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_STORY_FILE_EXTENTION);
+		String storyFileExtention = getStoryFileExtention();
 				
 		if (resource instanceof IFile) {
 			IFile file = (IFile) resource;

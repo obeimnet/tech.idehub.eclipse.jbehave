@@ -1,6 +1,5 @@
 package tech.idehub.eclipse.jbehave.junit.launcher;
 
-import static java.io.File.separator;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -9,21 +8,17 @@ public class StoryPathTest {
 	
 	 @Test
 	 public void test_display_folder_name() {
-		 String folderName = "abc".concat(separator)
-				 			  .concat("def").concat(separator).concat("**")
-				 			  .concat(separator).concat(".story");
+		 String folderName = "abc/def";
 		 
-		 StoryPath storyPath =  new StoryPath(folderName, true);
-		 assertEquals("abc.def.**.", storyPath.displayName());
+		 StoryPath storyPath =  new StoryPath(folderName, true, ".story");
+		 assertEquals("abc.def_", storyPath.displayName());
 	 }
 	 
 	 @Test
 	 public void test_display_file_name() {
-		 String folderName = "abc".concat(separator)
-	 			  .concat("def").concat(separator)
-	 			  .concat("ghi.story");
+		 String folderName = "abc/def/ghi.story";
 
-		StoryPath storyPath =  new StoryPath(folderName, false);
+		StoryPath storyPath =  new StoryPath(folderName, false, ".story");
 		assertEquals("abc.def.ghi.story", storyPath.displayName());
 	 }
 }

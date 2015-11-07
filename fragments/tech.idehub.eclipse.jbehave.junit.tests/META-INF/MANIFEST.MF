@@ -7,3 +7,8 @@ Fragment-Host: tech.idehub.eclipse.jbehave.junit;bundle-version="0.0.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: junit.framework,
  org.junit;version="4.11.0"
+Require-Bundle: org.junit
+Bundle-ClassPath: .,
+ lib/hamcrest-all-1.1.jar,
+ lib/junit-4.12.jar,
+ lib/mockito-all-1.10.19.jar
