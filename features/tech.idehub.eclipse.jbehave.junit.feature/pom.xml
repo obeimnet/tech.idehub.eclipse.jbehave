@@ -3,8 +3,8 @@
   
   <artifactId>tech.idehub.eclipse.jbehave.junit.feature</artifactId>
   <packaging>eclipse-feature</packaging>
-  <name>tech.idehub.eclipse.jbehave.junit</name>
-  <description>tech.idehub.eclipse.jbehave.junit</description>
+  <name>tech.idehub.eclipse.jbehave.junit.feature</name>
+  <description>tech.idehub.eclipse.jbehave.junit.feature</description>
   
   <parent>
    <groupId>tech.idehub.eclipse</groupId>
