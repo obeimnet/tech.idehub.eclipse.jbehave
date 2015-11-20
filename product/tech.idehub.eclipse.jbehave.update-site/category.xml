@@ -3,5 +3,5 @@
    <description name=".... Site" url="http://..../latest">
       
    </description>
-   <feature url="features/tech.idehub.eclipse.jbehave.junit.feature_0.0.1.jar" id="tech.idehub.eclipse.jbehave.junit.feature" version="0.0.1"/>
+   <feature  id="tech.idehub.eclipse.jbehave.junit.feature" version="0.0.1"/>
 </site>
