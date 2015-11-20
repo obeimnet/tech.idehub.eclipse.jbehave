@@ -11,7 +11,7 @@ public class StoryPathTest {
 		 String folderName = "abc/def";
 		 
 		 StoryPath storyPath =  new StoryPath(folderName, true, ".story");
-		 assertEquals("abc.def_", storyPath.displayName());
+		 assertEquals("abc.def", storyPath.displayName());
 	 }
 	 
 	 @Test

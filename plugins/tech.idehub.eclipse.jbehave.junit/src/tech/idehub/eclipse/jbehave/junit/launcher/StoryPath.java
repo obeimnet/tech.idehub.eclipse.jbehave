@@ -30,7 +30,7 @@ class StoryPath {
 
 	public String displayName() {
 		if (isFolder()) {
-			return getPath().toLowerCase().replace('/', '.').concat("_");
+			return getPath().toLowerCase().replace('/', '.');
 		}
 
 		return getPath().toLowerCase().replace('/', '.');
