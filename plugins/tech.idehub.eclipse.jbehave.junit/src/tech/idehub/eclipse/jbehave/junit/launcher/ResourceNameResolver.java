@@ -36,7 +36,7 @@ class ResourceNameResolver {
 		}
 
 		if ((storyPath != null) && storyPath.isFolder()) {
-			storyPath.setPath(storyPath.getPath().concat("_"));
+			storyPath.setPath(storyPath.getPath());
 		}
 		
 		if ((storyPath != null) && ("false".equalsIgnoreCase(retainLeadingSlash)) && (storyPath.getPath().startsWith("/"))) {

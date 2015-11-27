@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tech.idehub.eclipse</groupId>
   <artifactId>jbehave</artifactId>
-  <version>0.0.1</version>
+  <version>0.1.0.100</version>
   <packaging>pom</packaging>
   <name>tech.idehub.eclipse.jbehave</name>
   <description>tech.idehub.eclipse.jbehave</description>
@@ -83,8 +83,28 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
-				<extensions>true</extensions>
+				<extensions>true</extensions>			    
 			</plugin>
+			
+			<plugin>
+			    <groupId>org.eclipse.tycho</groupId>
+			    <artifactId>tycho-versions-plugin</artifactId>
+			    <version>${tycho-version}</version>
+			    <executions>
+			        <execution>
+			            <id>versions</id>
+			            <phase>process-sources</phase>
+			            <goals>
+			                <goal>set-version</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			    <configuration>
+			            <newVersion>0.1.0.100</newVersion>
+			    </configuration>
+			</plugin>
+      
 		</plugins>
-	</build>
+		
+  </build>
 </project>

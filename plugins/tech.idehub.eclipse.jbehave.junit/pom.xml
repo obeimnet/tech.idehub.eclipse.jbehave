@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tech.idehub.eclipse</groupId>
   <artifactId>tech.idehub.eclipse.jbehave.junit</artifactId>
-  <version>0.0.1</version>
+  <version>0.1.0.100</version>
    <packaging>eclipse-plugin</packaging>
   <name>tech.idehub.eclipse.jbehave.junit</name>
   <description>tech.idehub.eclipse.jbehave.junit</description>
@@ -10,7 +10,7 @@
   <parent>
    <groupId>tech.idehub.eclipse</groupId>
   <artifactId>jbehave</artifactId>
-  <version>0.0.1</version>
+  <version>0.1.0.100</version>
    <relativePath>../../</relativePath>
   </parent>
   

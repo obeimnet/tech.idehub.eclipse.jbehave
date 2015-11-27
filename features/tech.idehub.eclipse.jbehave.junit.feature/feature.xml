@@ -2,25 +2,26 @@
 <feature
       id="tech.idehub.eclipse.jbehave.junit.feature"
       label="Eclipse JBehave JUnit Runner"
-      version="0.0.1">
+      version="0.1.0.100"
+      provider-name="%providerName">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      %description
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      %copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="%licenseURL">
+      %license
    </license>
 
    <plugin
          id="tech.idehub.eclipse.jbehave.junit"
          download-size="0"
          install-size="0"
-         version="0.0.1"
+         version="0.1.0.100"
          unpack="false"/>
 
 </feature>
