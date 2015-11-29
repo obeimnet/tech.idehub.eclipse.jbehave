@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse JBehave JUnit Runner Tests
 Bundle-SymbolicName: tech.idehub.eclipse.jbehave.junit.tests
-Bundle-Version: 0.1.0.100
+Bundle-Version: 0.0.90.100
 Fragment-Host: tech.idehub.eclipse.jbehave.junit;bundle-version="0.0.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: junit.framework,
