@@ -8,7 +8,7 @@ TODO
 ----------
 # How it Works #
 
-The plugin passes the selected story file (or folder containing story files) as a system property (default: jbehave.story.path) to a custom JBehave JUnit runner class.
+The plugin sets the selected story file (or folder containing story files) as a system property (default: jbehave.story.path) to a custom JBehave JUnit runner class.
 
 - You will need to provide a custom JBehave JUnit runner class as in the following example:
 
@@ -27,14 +27,15 @@ The plugin passes the selected story file (or folder containing story files) as 
 ----------
 # Configuring the Plugin #
 
-- After installation, go to Run/Debug Edit Configurations.
+- After installation, go to Windows -> Preferences page.
 
-![](https://github.com/obeimnet/tech.idehub.eclipse.jbehave/blob/master/docs/images/run-debug-edit-configuration.png) 
-- On the Run/Debug configuration screen, you will see a new item labelled 'JBehae Junit' as in the following screen.
+- On the Preferences page, locate 'JBehave JUnit Runner'.
 ![](https://github.com/obeimnet/tech.idehub.eclipse.jbehave/blob/master/docs/images/jbehave-junit-run-debug-configuration.png)
 - Now you will need to enter yuor custom JBehave JUnit runner class.
 ![](https://github.com/obeimnet/tech.idehub.eclipse.jbehave/blob/master/docs/images/jbehave-junit-run-debug-configuration-2.png)
+
 There are three options for Story Path Resolution Strategy.
+
 - Default
 - <pre>
   Passes story file name relative to moudle. 
