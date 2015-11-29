@@ -17,7 +17,6 @@ public class PreferenceConstants {
 	public static final String P_STORY_PATH_SYSTEM_PROPERTY = "storyPathSystemProperty";
 
 	public static final String P_STORY_FILE_RESOLUTION_STRATEGY = "storyFileResolutionStrategy";
-
-	public static final String P_STORY_PATH_WITH_LEADING_SLASH =  "storyPathWithLeadingSlash";
 	
+	public static final String P_ADDITIONAL_JVM_OPTIONS =  "additionalJvmOptions";
 }

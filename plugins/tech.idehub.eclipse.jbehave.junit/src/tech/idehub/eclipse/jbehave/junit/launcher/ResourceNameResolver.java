@@ -3,7 +3,11 @@ package tech.idehub.eclipse.jbehave.junit.launcher;
 
 import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryFileExtention;
 import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryFileResolutionStrategy;
-import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryPathWithLeadingSlash;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
@@ -16,12 +20,35 @@ import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
 class ResourceNameResolver {
 	
 	
+	private static final String SRC_FOLDER = "src";
+	private static final String SRC_MAIN_FOLDER = "src/main";
+	private static final String SRC_MAIN_JAVA_FOLDER = "src/main/java";
+	private static final String SRC_MAIN_RESOURCES_FOLDER = "src/main/resources";
+
+	private static final String SRC_TEST_FOLDER = "src/test";
+	private static final String SRC_TEST_JAVA_FOLDER = "src/test/java";
+	private static final String SRC_TEST_RESOURCES_FOLDER = "src/test/resources";
+
+	private static final List<String> MAVEN_RESOURCES;
+
+	static {
+		MAVEN_RESOURCES = new ArrayList<>();
+		// keep insertion order
+		MAVEN_RESOURCES.add(SRC_MAIN_RESOURCES_FOLDER);
+		MAVEN_RESOURCES.add(SRC_MAIN_JAVA_FOLDER);
+		MAVEN_RESOURCES.add(SRC_MAIN_FOLDER);
+		MAVEN_RESOURCES.add(SRC_TEST_RESOURCES_FOLDER);
+		MAVEN_RESOURCES.add(SRC_TEST_JAVA_FOLDER);
+		MAVEN_RESOURCES.add(SRC_TEST_FOLDER);
+		MAVEN_RESOURCES.add(SRC_FOLDER);
+
+	}
+	    
 	static StoryPath resolve(IResource resource) {
 		
 		PreferenceConstants.StoryNameResolverType storyNameResolverType = PreferenceConstants.StoryNameResolverType
 				.valueOf(getStoryFileResolutionStrategy());
 		
-		String retainLeadingSlash = getStoryPathWithLeadingSlash();
 
 		StoryPath storyPath = null;
 		switch (storyNameResolverType) {
@@ -39,7 +66,8 @@ class ResourceNameResolver {
 			storyPath.setPath(storyPath.getPath());
 		}
 		
-		if ((storyPath != null) && ("false".equalsIgnoreCase(retainLeadingSlash)) && (storyPath.getPath().startsWith("/"))) {
+		//remove leading / from story path 
+		if ((storyPath != null)  && (storyPath.getPath().startsWith("/"))) {
 			return new StoryPath(storyPath.getPath().substring(1), storyPath.isFolder(), getStoryFileExtention());
 		}
 
@@ -101,14 +129,18 @@ class ResourceNameResolver {
 			}
 		}
 
-		String resourceName = resource.getProjectRelativePath().toString().replaceFirst("src/test/resources", "").replaceFirst("src/test/java", "")
-				.replaceFirst("src/main/resources", "").replaceFirst("src/main/java", "");
-		switch (resource.getType()) {
-		case IResource.FILE:
-			return new StoryPath(resourceName, false, getStoryFileExtention());
-		case IResource.FOLDER:
-			return new StoryPath(resourceName, true, getStoryFileExtention());
+		String resourceName = defaultStoryFilePath(resource);
+		if (resourceName == null || resourceName.isEmpty()) {
+			return null;
 		}
+		
+		switch (resource.getType()) {
+			case IResource.FILE:
+				return new StoryPath(resourceName, false, getStoryFileExtention());
+			case IResource.FOLDER:
+				return new StoryPath(resourceName, true, getStoryFileExtention());
+		}
+		
 		return null;
 	}
 
@@ -135,4 +167,37 @@ class ResourceNameResolver {
 	private static boolean isFolder(IResource resource) {
 		return (IResource.FOLDER == resource.getType());
 	}
+	
+	private static Set<String> getExcludedFolders(String projectPath) {
+        String moduleName_ = projectPath;
+        if (projectPath.endsWith("/")) {
+            moduleName_ = projectPath.substring(0, projectPath.length() - 1);
+        }
+        Set<String> set = new HashSet<>();
+        for (String mavenResource : MAVEN_RESOURCES) {
+            set.add(moduleName_.concat("/").concat(mavenResource));
+        }
+        return  set;
+    }
+	
+	private static String defaultStoryFilePath(IResource resource) {
+
+        String projectPath = resource.getProject().getRawLocation().toString();
+        String resourcePath =   resource.getRawLocation().toString();
+
+        Set<String> excludedFolders = getExcludedFolders(projectPath);
+        if (excludedFolders.contains(resourcePath)) {
+            return "";
+        }
+
+        resourcePath = resourcePath.replace(projectPath, "");
+        for (String mavenResource : MAVEN_RESOURCES) {
+            resourcePath = resourcePath.replace(mavenResource, "");
+        }
+
+        if (resourcePath.startsWith("/"))  {
+            return resourcePath.substring(1);
+        }
+        return resourcePath;
+    }
 }

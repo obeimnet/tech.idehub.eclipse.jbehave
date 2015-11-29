@@ -100,7 +100,7 @@
 			        </execution>
 			    </executions>
 			    <configuration>
-			            <newVersion>0.1.0.100</newVersion>
+			            <newVersion>0.0.90.100</newVersion>
 			    </configuration>
 			</plugin>
       

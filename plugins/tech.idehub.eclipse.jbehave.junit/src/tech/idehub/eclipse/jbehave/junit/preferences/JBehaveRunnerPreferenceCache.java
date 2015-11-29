@@ -3,7 +3,7 @@ import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.
 import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_FILE_EXTENTION;
 import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_FILE_RESOLUTION_STRATEGY;
 import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY;
-import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_STORY_PATH_WITH_LEADING_SLASH;
+import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.P_ADDITIONAL_JVM_OPTIONS;
 
 import java.util.HashMap;
 
@@ -48,8 +48,8 @@ public class JBehaveRunnerPreferenceCache {
 		 return get(P_STORY_PATH_SYSTEM_PROPERTY);
 	}
 	
-	
-	public synchronized static String getStoryPathWithLeadingSlash() {
-		 return get(P_STORY_PATH_WITH_LEADING_SLASH);
+	public synchronized static String getAdditionalJvmOptions() {
+		 return get(P_ADDITIONAL_JVM_OPTIONS);
 	}
+	
 }

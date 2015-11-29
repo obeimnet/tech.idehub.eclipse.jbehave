@@ -42,14 +42,11 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 	private static final String ATTR_TEST_CONTAINER= JUNIT_PLUGIN_ID +".CONTAINER";
 	private static final String ID_JUNIT_APPLICATION = "org.eclipse.jdt.junit.launchconfig"; //$NON-NLS-1$
 
-	/**
-	 * Default constructor.
-	 */
+
 	public JBehaveJUnitLaunchShortcut() {
 	}
 
 
- 
 	public void launch(IEditorPart editor, String mode) {
 		
 		try {			
@@ -79,7 +76,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 
 	private void performLaunch(String projectName, StoryPath storyPath, String mode) throws InterruptedException, CoreException {
 		ILaunchConfigurationWorkingCopy temparary= createLaunchConfiguration(projectName, storyPath);
-		ILaunchConfiguration config= findExistingLaunchConfiguration(temparary, mode);
+		ILaunchConfiguration config= findExistingLaunchConfiguration(temparary, storyPath, mode);
 		if (config == null) {
 			// no existing found: create a new one
 			config= temparary.doSave();
@@ -102,6 +99,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		    
 		String mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_RUNNER_CLASS);
 		String storyPathSysProperty = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY);
+		String additionalJvmOptions = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_ADDITIONAL_JVM_OPTIONS);
 		
 		final String testName = storyPath.displayName();
 		final String containerHandleId = "";
@@ -114,12 +112,9 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		wc.setAttribute(ATTR_KEEPRUNNING, false);
 		wc.setAttribute(ATTR_TEST_CONTAINER, containerHandleId);
 		wc.setAttribute(ATTR_TEST_RUNNER_KIND, JUNIT4_TEST_KIND_ID);
-		//JUnitMigrationDelegate.mapResources(wc);
-		//AssertionVMArg.setArgDefault(wc);
-		wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS, "-D" + storyPathSysProperty + "=" + storyPath.jvmArgStoryPath());
-		//if (element instanceof IMethod) {
-			//wc.setAttribute(JUnitLaunchConfigurationConstants.ATTR_TEST_METHOD_NAME, element.getElementName()); // only set for methods
-		//}
+		String jvmArguments = "-D" + storyPathSysProperty + "=" + storyPath.jvmArgStoryPath() + " " + additionalJvmOptions;
+		wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS, jvmArguments);
+		 
 		return wc;
 	}
  
@@ -128,7 +123,6 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		return new String[] {
 			IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME,
 			IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME,
-			IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS
 		};
 	}
 
@@ -177,15 +171,9 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 	
 	 
 	
-	private ILaunchConfiguration findExistingLaunchConfiguration(ILaunchConfigurationWorkingCopy temporary, String mode) throws InterruptedException, CoreException {
-		List<ILaunchConfiguration> candidateConfigs= findExistingLaunchConfigurations(temporary);
+	private ILaunchConfiguration findExistingLaunchConfiguration(ILaunchConfigurationWorkingCopy temporary, StoryPath storyPath, String mode) throws InterruptedException, CoreException {
+		List<ILaunchConfiguration> candidateConfigs= findExistingLaunchConfigurations(temporary, storyPath);
 
-		// If there are no existing configs associated with the IType, create
-		// one.
-		// If there is exactly one config associated with the IType, return it.
-		// Otherwise, if there is more than one config associated with the
-		// IType, prompt the
-		// user to choose one.
 		int candidateCount= candidateConfigs.size();
 		if (candidateCount == 0) {
 			return null;
@@ -197,16 +185,16 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		return null;
 	}
 
-	private List<ILaunchConfiguration> findExistingLaunchConfigurations(ILaunchConfigurationWorkingCopy temporary) throws CoreException {
+	private List<ILaunchConfiguration> findExistingLaunchConfigurations(ILaunchConfigurationWorkingCopy temporary, StoryPath storyPath) throws CoreException {
 		ILaunchConfigurationType configType= temporary.getType();
 
 		ILaunchConfiguration[] configs= getLaunchManager().getLaunchConfigurations(configType);
 		String[] attributeToCompare= getAttributeNamesToCompare();
-
+		String candidateConfigurationName = storyPath.displayName();
 		ArrayList<ILaunchConfiguration> candidateConfigs= new ArrayList<ILaunchConfiguration>(configs.length);
 		for (ILaunchConfiguration config : configs) {
 			
-			if (hasSameAttributes(config, temporary, attributeToCompare)) {
+			if (hasSameAttributes(config, temporary, attributeToCompare) && config.getName().equals(candidateConfigurationName)) {
 				candidateConfigs.add(config);
 			}
 		}
