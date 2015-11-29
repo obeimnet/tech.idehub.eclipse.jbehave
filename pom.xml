@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tech.idehub.eclipse</groupId>
   <artifactId>jbehave</artifactId>
-  <version>0.1.0.100</version>
+  <version>0.0.90.100</version>
   <packaging>pom</packaging>
   <name>tech.idehub.eclipse.jbehave</name>
   <description>tech.idehub.eclipse.jbehave</description>
