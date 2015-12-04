@@ -1,4 +1,4 @@
-# Eclipse JBehave JUnit Test Runner #
+# Eclipse JBehave JUnit Story Runner #
 
  ![](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave.svg)
 
