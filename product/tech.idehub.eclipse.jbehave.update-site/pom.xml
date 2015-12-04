@@ -9,7 +9,7 @@
   <parent>
    <groupId>tech.idehub.eclipse</groupId>
   <artifactId>jbehave</artifactId>
-  <version>0.0.90.100</version>
+  <version>0.0.90.200</version>
    <relativePath>../../</relativePath>
   </parent>
   

@@ -2,28 +2,28 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tech.idehub.eclipse</groupId>
   <artifactId>jbehave</artifactId>
-  <version>0.0.90.100</version>
+  <version>0.0.90.200</version>
   <packaging>pom</packaging>
   <name>tech.idehub.eclipse.jbehave</name>
   <description>tech.idehub.eclipse.jbehave</description>
-  
-  
+
+
   <modules>
   	<module>plugins/tech.idehub.eclipse.jbehave.junit</module>
   	<module>fragments/tech.idehub.eclipse.jbehave.junit.tests</module>
   	<module>features/tech.idehub.eclipse.jbehave.junit.feature</module>
   	<module>product/tech.idehub.eclipse.jbehave.update-site</module>
-  	
+
   </modules>
-  
-  
-  
+
+
+
   <properties>
 		<tycho-version>0.24.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<eclipse-p2-repo.url>http://download.eclipse.org/releases/mars/</eclipse-p2-repo.url>
 	</properties>
-  
+
   	<repositories>
 		<repository>
 			<id>eclipse-p2-repo</id>
@@ -31,9 +31,9 @@
 			<layout>p2</layout>
 		</repository>
 	</repositories>
-  
+
   <build>
-     
+
 		<plugins>
 
 			<!-- Tycho build -->
@@ -43,7 +43,7 @@
 				<version>${tycho-version}</version>
 				<configuration>
 				  <pomDependencies>consider</pomDependencies>
-					
+
 					<environments>
 						<environment>
 							<os>win32</os>
@@ -83,9 +83,9 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
-				<extensions>true</extensions>			    
+				<extensions>true</extensions>
 			</plugin>
-			
+
 			<plugin>
 			    <groupId>org.eclipse.tycho</groupId>
 			    <artifactId>tycho-versions-plugin</artifactId>
@@ -100,11 +100,11 @@
 			        </execution>
 			    </executions>
 			    <configuration>
-			            <newVersion>0.0.90.100</newVersion>
+			            <newVersion>0.0.90.200</newVersion>
 			    </configuration>
 			</plugin>
-      
+
 		</plugins>
-		
+
   </build>
 </project>
