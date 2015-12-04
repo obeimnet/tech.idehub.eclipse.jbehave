@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -18,8 +18,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
 
 class ResourceNameResolver {
-	
-	
+
+
 	private static final String SRC_FOLDER = "src";
 	private static final String SRC_MAIN_FOLDER = "src/main";
 	private static final String SRC_MAIN_JAVA_FOLDER = "src/main/java";
@@ -43,12 +43,16 @@ class ResourceNameResolver {
 		MAVEN_RESOURCES.add(SRC_FOLDER);
 
 	}
-	    
+
 	static StoryPath resolve(IResource resource) {
-		
+
+		IPath path = resource.getLocation();
+		if (path == null) {
+			return null;
+		}
+
 		PreferenceConstants.StoryNameResolverType storyNameResolverType = PreferenceConstants.StoryNameResolverType
 				.valueOf(getStoryFileResolutionStrategy());
-		
 
 		StoryPath storyPath = null;
 		switch (storyNameResolverType) {
@@ -65,13 +69,13 @@ class ResourceNameResolver {
 		if ((storyPath != null) && storyPath.isFolder()) {
 			storyPath.setPath(storyPath.getPath());
 		}
-		
-		//remove leading / from story path 
+
+		//remove leading / from story path
 		if ((storyPath != null)  && (storyPath.getPath().startsWith("/"))) {
 			return new StoryPath(storyPath.getPath().substring(1), storyPath.isFolder(), getStoryFileExtention());
 		}
 
-		
+
 		return storyPath;
 	}
 
@@ -106,45 +110,24 @@ class ResourceNameResolver {
 	}
 
 	private static StoryPath resolveDefault(IResource resource) {
-		
-		if (isFolder(resource) && resource.getName().equals("resources")) {
-			IContainer parent = resource.getParent();
-			if ((parent != null) 
-					&& (((parent.getName().equals("test")) || (parent.getName().equals("java")))) 
-					&& (parent.getParent() != null)
-					&& (parent.getParent().getName().equals("src"))) {
-				return null;
-			}
-		} else if (isFolder(resource) && (resource.getName().equals("main") || resource.getName().equals("test"))) {
-			IContainer parent = resource.getParent();
-			if (parent != null && parent.getName().equals("src")) {
-				if (parent.getParent() != null && parent.getParent().getName().equals(resource.getProject().getName())) {
-				return null;
-				}
-			}
-		} else if (isFolder(resource) && resource.getName().equals("src")) {
-			IContainer parent = resource.getParent();
-			if (parent.getParent() != null && parent.getName().equals(resource.getProject().getName())) {
-				return null;
-			}
-		}
 
 		String resourceName = defaultStoryFilePath(resource);
 		if (resourceName == null || resourceName.isEmpty()) {
 			return null;
 		}
-		
+
 		switch (resource.getType()) {
 			case IResource.FILE:
 				return new StoryPath(resourceName, false, getStoryFileExtention());
 			case IResource.FOLDER:
 				return new StoryPath(resourceName, true, getStoryFileExtention());
 		}
-		
+
 		return null;
 	}
 
 	private static StoryPath resolveAbsolutePath(IResource resource) {
+
 		switch (resource.getType()) {
 		case IResource.FILE:
 			return new StoryPath(resource.getRawLocation().toString(), false, getStoryFileExtention());
@@ -164,10 +147,6 @@ class ResourceNameResolver {
 		return null;
 	}
 
-	private static boolean isFolder(IResource resource) {
-		return (IResource.FOLDER == resource.getType());
-	}
-	
 	private static Set<String> getExcludedFolders(String projectPath) {
         String moduleName_ = projectPath;
         if (projectPath.endsWith("/")) {
@@ -179,11 +158,11 @@ class ResourceNameResolver {
         }
         return  set;
     }
-	
+
 	private static String defaultStoryFilePath(IResource resource) {
 
-        String projectPath = resource.getProject().getRawLocation().toString();
-        String resourcePath =   resource.getRawLocation().toString();
+        String projectPath = resource.getProject().getLocation().toString();
+        String resourcePath =   resource.getLocation().toString();
 
         Set<String> excludedFolders = getExcludedFolders(projectPath);
         if (excludedFolders.contains(resourcePath)) {

@@ -15,63 +15,62 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IFileEditorInput;
 
+import tech.idehub.eclipse.jbehave.junit.PluginConstants;
+
 public class JBehaveJUnitLaunchableTester extends PropertyTester {
 
-	public static final String  PROP_CAN_LAUNCH_JBEHAVE = "canLaunchJBehave";
-	
-	public static final String NAME_SPACE = "tech.idehub.eclipse.jbehave.junit.resources";
-	
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		
+
 		if (!(receiver instanceof IAdaptable)) {
             return false;
         }
-		 
+
 		try {
-			if (PROP_CAN_LAUNCH_JBEHAVE.equals(property)) {
+			if (PluginConstants.PROP_CAN_LAUNCH_JBEHAVE.equals(property)) {
 				return canLaunchJBehave(receiver);
 			}
 		} catch (Exception exc) {
-			;//
+			exc.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
 	protected boolean canLaunchJBehave(Object receiver)  {
-		
+
 		  if (receiver instanceof IFileEditorInput) {
 			  IFileEditorInput editor = (IFileEditorInput) receiver;
-			  return canLaunchJBehaveResource(editor.getFile());	      			  
+			  return canLaunchJBehaveResource(editor.getFile());
 		  } else  if (receiver instanceof IStructuredSelection) {
-	        IStructuredSelection selection = (IStructuredSelection) receiver;   
+	        IStructuredSelection selection = (IStructuredSelection) receiver;
 	        if (ResourceNameResolver.resolve(selection) != null) {
 	        	return true;
 	        }
 		  } else if (receiver instanceof IResource) {
 				IResource resource = (IResource) receiver;
-	        	return ResourceNameResolver.resolve(resource) != null && canLaunchJBehaveResource(resource);	        	
+	        	return canLaunchJBehaveResource(resource) && ResourceNameResolver.resolve(resource) != null ;
 	      } else if (receiver instanceof IJavaElement) {
-				IJavaElement element= (IJavaElement) receiver;				
-				return ResourceNameResolver.resolve(element) != null && canLaunchJBehaveResource(element.getResource());	 
-		  }   
+				IJavaElement element= (IJavaElement) receiver;
+				return ResourceNameResolver.resolve(element) != null && canLaunchJBehaveResource(element.getResource());
+		  }
 
 		return false;
 	}
-	
+
 	private boolean canLaunchJBehaveResource(IResource resource)  {
 
-		if (resource.isVirtual() 
-				|| resource.isDerived() 
-				|| resource.isLinked() 
+		if (resource.isVirtual()
+				|| resource.isDerived()
+				|| resource.isLinked()
 				|| resource.isHidden()
+				|| resource.getResourceAttributes().isArchive()
 				|| !resource.isAccessible()) {
 			return false;
 		}
-		
+
 		String storyFileExtention = getStoryFileExtention();
-				
+
 		if (resource instanceof IFile) {
 			IFile file = (IFile) resource;
 			if (file.getName().endsWith(storyFileExtention)) {
@@ -92,10 +91,9 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
 		}
 		return false;
 	}
-	
+
 	private void containsStoryFile(IFolder folder, String storyFileExtention, List<String> stories) throws CoreException {
-		
-		
+
 		IResource[] members = folder.members();
 		if (members == null || members.length == 0 || !stories.isEmpty()) {
 			return;

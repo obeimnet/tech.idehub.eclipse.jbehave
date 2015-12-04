@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import tech.idehub.eclipse.jbehave.junit.PluginConstants;
+
 @RunWith(MockitoJUnitRunner.class)
 public class JBehaveJUnitLaunchableTesterTest {
 
@@ -25,7 +27,7 @@ public class JBehaveJUnitLaunchableTesterTest {
 	@Test
 	public void list_is_not_a_valid_receiver_object() {
 		Object receiver = mock(List.class);
-		assertFalse(tester.test(receiver, JBehaveJUnitLaunchableTester.PROP_CAN_LAUNCH_JBEHAVE, null, null));
+		assertFalse(tester.test(receiver, PluginConstants.PROP_CAN_LAUNCH_JBEHAVE, null, null));
 		verify(tester, times(0)).canLaunchJBehave(receiver);
 	}
 	
