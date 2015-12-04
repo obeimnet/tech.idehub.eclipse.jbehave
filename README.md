@@ -1,5 +1,4 @@
-# Eclipse JBehave JUnit Test Runner  # 
-![](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave.svg)
+# Eclipse JBehave JUnit Test Runner # ![](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave.svg)
 This plugin allows running JBehave story files as JUnit tests using context menu from explorer view or an editor.
 
 ![](https://github.com/obeimnet/tech.idehub.eclipse.jbehave/blob/master/docs/images/run-from-context.png)
