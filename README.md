@@ -1,6 +1,6 @@
 # Eclipse JBehave JUnit Story Runner #
 
- ![](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave.svg)
+[![Build Status](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave.svg?branch=master)](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave)
 
 This plugin allows running JBehave story files as JUnit tests using context menu from explorer view or an editor.
 
@@ -16,7 +16,7 @@ The plugin sets the selected story file (or folder containing story files) as a 
 
 - You will need to provide a custom JBehave JUnit runner class as in the following example:
 
-**Example:** 
+**Example:**
   <pre>
   @RunWith(......)
   public class MyStoryRunner extends JUnitStories {
@@ -42,11 +42,11 @@ There are three options for Story Path Resolution Strategy.
 
 - Default
 - <pre>
-  Passes story file name relative to moudle. 
+  Passes story file name relative to moudle.
   If the project has default maven settings, maven resource folders will be ignored.
   Example: For story file located in c:/myWorkspace/myProject1/src/test/resources/myStories/group1/blah.story,
-           the plugin will set system property jbehave.story.path to "myStories/group1/blah.story" 
-           
+           the plugin will set system property jbehave.story.path to "myStories/group1/blah.story"
+
 </pre>
 - The other two options are self explanatory.
 
