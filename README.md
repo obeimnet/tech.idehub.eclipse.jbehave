@@ -54,19 +54,19 @@ If not, please help your self. Google it.
 - Using example story file  located in *c:/myWorkspace/myProject1/src/test/resources/myStories/group1/blah.story* :
 - **Default**
   - Passes story file name relative to project location.
-  - In additon, if the project has default maven settings, maven resource folders will be ignored.
+  - In addition, if the project has default maven settings, maven resource folders will be ignored.
   -  jbehave.story.path will be set to "myStories/group1/blah.story"
 - **Relative to Project Location**
    - jbehave.story.path will be set to "myStories/group1/blah.story"
 - **Absolute Path**
    -  jbehave.story.path will be set to "c:/myWorkspace/myProject1/src/test/resources/myStories/group1/blah.story"
 
-**Additionl jvm options**
+**Additional jvm options**
 - Allows you to pass extra jvm parameters, e.g. jvm heap parameters.
 
 ## Supported Platforms ##
 
-The plguin has been testes in the following platforms:
+The plugin has been testes in the following platforms:
 
 - Java 7
 - Eclipse Mars (4.5)
