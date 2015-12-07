@@ -7,7 +7,7 @@ This plugin allows running JBehave story files as JUnit tests using context menu
 This documentation assumes the reader is a seasoned Eclipse user who knows how to install plugins.
 If not, please help your self. Google it.
 
-## Features: ##
+## Features ##
 
 - The plugin is integrated with Eclipse's Run As (or Debug As) context menus.
 - The context menu appears automatically when right clicking on: <br/>
@@ -15,17 +15,16 @@ If not, please help your self. Google it.
 &nbsp; * A story file (on project explorer view)<br/>
 &nbsp; * A story editor 
 
-
 ![](docs/images/run-from-context.png)
 
-# Installation #
+##  Installation ##
 [Get](#) a zipped file and install it into eclipse from a local update archive.
+025555555555
 
-----------
-# How it Works #
+## How it Works ##
 
-The plugin sets the selected story file (or folder containing story files) as a system property (default: jbehave.story.path) to a custom JBehave JUnit runner class.
-
+- The plugin sets the path of selected story file (or folder containing story files) as a system property (default: jbehave.story.path).
+- A custom JBehave JUnit runner class read the system property.
 - You will need to provide a custom JBehave JUnit runner class as in the following example:
 
 **Example:**
@@ -42,8 +41,7 @@ The plugin sets the selected story file (or folder containing story files) as a 
  } 
 </pre>
 
-----------
-# Configuring the Plugin #
+## Configuring the Plugin ##
 
 - After installation, go to Windows -> Preferences page.
 
@@ -66,8 +64,7 @@ The plugin sets the selected story file (or folder containing story files) as a 
 **Additionl jvm options**
 - Allows you to pass extra jvm parameters, e.g. jvm heap parameters.
 
-# Supported Platform #
-----------
+## Supported Platforms ##
 
 The plguin has been testes in the following platforms:
 
