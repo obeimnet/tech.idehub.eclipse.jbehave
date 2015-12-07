@@ -24,7 +24,7 @@ If not, please help your self. Google it.
 ## How it Works ##
 
 - The plugin sets the path of selected story file (or folder containing story files) as a system property (default: jbehave.story.path).
-- A custom JBehave JUnit runner class read the system property.
+- A custom JBehave JUnit runner class reads the system property.
 - You will need to provide a custom JBehave JUnit runner class as in the following example:
 
 **Example:**
