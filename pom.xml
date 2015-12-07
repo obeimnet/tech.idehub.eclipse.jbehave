@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tech.idehub.eclipse</groupId>
   <artifactId>jbehave</artifactId>
-  <version>0.0.90.200</version>
+  <version>1.0.0.RC1</version>
   <packaging>pom</packaging>
 
   <name>Eclipse JBehave JUnit Story Runner</name>
@@ -101,7 +101,7 @@
 			        </execution>
 			    </executions>
 			    <configuration>
-			            <newVersion>0.0.90.200</newVersion>
+			            <newVersion>1.0.0.RC1</newVersion>
 			    </configuration>
 			</plugin>
 

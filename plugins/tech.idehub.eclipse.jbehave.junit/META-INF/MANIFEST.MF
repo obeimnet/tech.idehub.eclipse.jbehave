@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse JBehave JUnit Runner
 Bundle-SymbolicName: tech.idehub.eclipse.jbehave.junit;singleton:=true
-Bundle-Version: 0.0.90.200
+Bundle-Version: 1.0.0.RC1
 Bundle-Activator: tech.idehub.eclipse.jbehave.junit.Activator
 Bundle-Vendor: idehub.tech
 Require-Bundle: org.eclipse.ui,

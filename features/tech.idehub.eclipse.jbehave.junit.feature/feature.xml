@@ -2,7 +2,7 @@
 <feature
       id="tech.idehub.eclipse.jbehave.junit.feature"
       label="Eclipse JBehave JUnit Runner"
-      version="0.0.90.200"
+      version="1.0.0.RC1"
       provider-name="%providerName">
 
    <description>
@@ -21,7 +21,7 @@
          id="tech.idehub.eclipse.jbehave.junit"
          download-size="0"
          install-size="0"
-         version="0.0.90.200"
+         version="1.0.0.RC1"
          unpack="false"/>
 
 </feature>
