@@ -52,7 +52,7 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
 	        	return canLaunchJBehaveResource(resource) && ResourceNameResolver.resolve(resource) != null ;
 	      } else if (receiver instanceof IJavaElement) {
 				IJavaElement element= (IJavaElement) receiver;
-				return ResourceNameResolver.resolve(element) != null && canLaunchJBehaveResource(element.getResource());
+				return canLaunchJBehaveResource(element.getResource()) && ResourceNameResolver.resolve(element) != null;
 		  }
 
 		return false;
@@ -64,7 +64,7 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
 				|| resource.isDerived()
 				|| resource.isLinked()
 				|| resource.isHidden()
-				|| resource.getResourceAttributes().isArchive()
+				//|| resource.getResourceAttributes().isArchive()
 				|| !resource.isAccessible()) {
 			return false;
 		}
