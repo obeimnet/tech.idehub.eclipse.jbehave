@@ -19,7 +19,6 @@ If not, please help your self. Google it.
 
 ##  Installation ##
 [Get](#) a zipped file and install it into eclipse from a local update archive.
-025555555555
 
 ## How it Works ##
 
