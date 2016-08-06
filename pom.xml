@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tech.idehub.eclipse</groupId>
   <artifactId>jbehave</artifactId>
-  <version>1.0.0.RC1</version>
+  <version>1.0.0.RC2</version>
   <packaging>pom</packaging>
 
   <name>Eclipse JBehave JUnit Story Runner</name>
@@ -16,7 +16,7 @@
 
   <properties>
        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	   <tycho-version>0.24.0</tycho-version>
+	   <tycho-version>0.25.0</tycho-version>
 	   <eclipse-p2-repo.url>http://download.eclipse.org/releases/mars/</eclipse-p2-repo.url>
   </properties>
 
@@ -101,7 +101,7 @@
 			        </execution>
 			    </executions>
 			    <configuration>
-			            <newVersion>1.0.0.RC1</newVersion>
+			            <newVersion>1.0.0.RC2</newVersion>
 			    </configuration>
 			</plugin>
 
