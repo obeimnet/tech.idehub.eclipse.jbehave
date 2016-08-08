@@ -16,7 +16,7 @@
 
   <properties>
        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	   <tycho-version>0.25.0</tycho-version>
+	   <tycho-version>0.24.0</tycho-version>
 	   <eclipse-p2-repo.url>http://download.eclipse.org/releases/mars/</eclipse-p2-repo.url>
   </properties>
 
