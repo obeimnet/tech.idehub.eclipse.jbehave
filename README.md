@@ -63,7 +63,7 @@ If not, please help your self. Google it.
    -  story.path will be set to "c:/myWorkspace/myProject1/src/test/resources/myStories/group1/blah.story"
 
 **Additional jvm options**
-- Allows you to pass extra jvm parameters, e.g. jvm heap parameters.
+- Allows you to pass extra jvm options, e.g. -Dproperty1=value1
 
 ## Supported Platforms ##
 
