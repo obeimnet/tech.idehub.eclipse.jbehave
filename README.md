@@ -1,11 +1,8 @@
-# Eclipse JBehave JUnit Story Runner #
+# Eclipse JBehave JUnit Story Runner Plugin#
 
 [![Build Status](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave.svg?branch=master)](https://travis-ci.org/obeimnet/tech.idehub.eclipse.jbehave)
 
-This plugin allows running JBehave story files as JUnit tests using context menu from project explorer view or an editor.
-
-This documentation assumes the reader is a seasoned Eclipse user who knows how to install plugins.
-If not, please help your self. Google it.
+This plugin allows running JBehave story files as JUnit tests using context menu from Eclipse project explorer view or editor.
 
 ## Features ##
 
