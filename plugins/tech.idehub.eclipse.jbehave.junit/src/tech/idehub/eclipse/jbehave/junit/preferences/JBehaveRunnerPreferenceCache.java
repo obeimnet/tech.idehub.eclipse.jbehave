@@ -8,6 +8,7 @@ import static tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.
 import java.util.HashMap;
 
 import tech.idehub.eclipse.jbehave.junit.Activator;
+import tech.idehub.eclipse.jbehave.junit.project.ProjectPreferencePage;
 
 
 public class JBehaveRunnerPreferenceCache {
@@ -28,8 +29,10 @@ public class JBehaveRunnerPreferenceCache {
 		cache.clear();
 	}
 
-	public synchronized static String getStoryFileResolutionStrategy() {
-		 return get(P_STORY_FILE_RESOLUTION_STRATEGY);
+	public synchronized static String getStoryFileResolutionStrategy(String projectName) {
+		String projectStrategy = ProjectPreferencePage.PREFERENCE_KEY_PREFIX.concat(PreferenceConstants.P_STORY_FILE_RESOLUTION_STRATEGY.concat(projectName));
+		String projectPreference = get(projectStrategy);
+		return (projectPreference == null) ? get(P_STORY_FILE_RESOLUTION_STRATEGY) : projectPreference;
 	}
 
 

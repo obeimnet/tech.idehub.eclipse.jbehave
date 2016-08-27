@@ -52,7 +52,7 @@ class ResourceNameResolver {
 		}
 
 		PreferenceConstants.StoryNameResolverType storyNameResolverType = PreferenceConstants.StoryNameResolverType
-				.valueOf(getStoryFileResolutionStrategy());
+				.valueOf(getStoryFileResolutionStrategy(resource.getProject().getName()));
 
 		StoryPath storyPath = null;
 		switch (storyNameResolverType) {

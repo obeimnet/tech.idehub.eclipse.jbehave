@@ -62,4 +62,20 @@
             type="org.eclipse.core.runtime.IAdaptable">
       </propertyTester>
    </extension>
+   
+   <extension
+     point = "org.eclipse.ui.propertyPages">
+        <page
+           	id="tech.idehub.eclipse.jbehave.junit.Project"
+           	name="JBehave JUnit Runner"
+	   		class="tech.idehub.eclipse.jbehave.junit.project.ProjectPreferencePage">
+	   			<enabledWhen>
+    				<adapt type="org.eclipse.core.resources.IProject">
+       			 	<test property="org.eclipse.core.resources.projectNature" 
+              		value="org.eclipse.jdt.core.javanature"/>
+    				</adapt>         
+				</enabledWhen>
+        </page>
+        
+  </extension>
 </plugin>

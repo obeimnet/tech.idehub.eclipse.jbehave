@@ -13,7 +13,7 @@ If not, please help your self. Google it.
 - The context menu appears automatically when right clicking on: <br/>
 &nbsp; * A folder containing one or more story files (on project explorer view) <br/>
 &nbsp; * A story file (on project explorer view)<br/>
-&nbsp; * A story editor 
+&nbsp; * A story editor
 
 ![](docs/images/run-from-context.png)
 
@@ -22,7 +22,7 @@ If not, please help your self. Google it.
 
 ## How it Works ##
 
-- The plugin sets the path of selected story file (or folder containing story files) as a system property (default: jbehave.story.path).
+- The plugin sets the path of selected story file (or folder containing story files) as a system property (default: story.path).
 - A custom JBehave JUnit runner class reads the system property.
 - You will need to provide a custom JBehave JUnit runner class as in the following example:
 
@@ -34,17 +34,19 @@ If not, please help your self. Google it.
    @Override
    protected List&lt;String&gt; storyPaths() {
 	   List&lt;String&gt; stories = new ArrayList&lt;&gt;();
-       stories.add(System.getProperty("jbehave.story.path"));
+       stories.add(System.getProperty("story.path"));
        return stories;
    }
- } 
+ }
 </pre>
 
 ## Configuring the Plugin ##
 
-- After installation, go to Windows -> Preferences page.
+- After installation, you have the option of setting preferences at two scopes:
+- Workspace scope (applies to all projects) go to Windows -> Preferences page.
+- Project scope, use project properties window
 
-- On the Preferences page, locate 'JBehave JUnit Runner'.
+- On the Preferences (or project properties) page, locate 'JBehave JUnit Runner'.
 ![](docs/images/jbehave-junit-run-debug-configuration.png)
 - Now you will need to enter yuor custom JBehave JUnit runner class.
 ![](docs/images/jbehave-junit-run-debug-configuration-2.png)
@@ -54,11 +56,11 @@ If not, please help your self. Google it.
 - **Default**
   - Passes story file name relative to project location.
   - In addition, if the project has default maven settings, maven resource folders will be ignored.
-  -  jbehave.story.path will be set to "myStories/group1/blah.story"
+  -  story.path will be set to "myStories/group1/blah.story"
 - **Relative to Project Location**
-   - jbehave.story.path will be set to "myStories/group1/blah.story"
+   - story.path will be set to "myStories/group1/blah.story"
 - **Absolute Path**
-   -  jbehave.story.path will be set to "c:/myWorkspace/myProject1/src/test/resources/myStories/group1/blah.story"
+   -  story.path will be set to "c:/myWorkspace/myProject1/src/test/resources/myStories/group1/blah.story"
 
 **Additional jvm options**
 - Allows you to pass extra jvm parameters, e.g. jvm heap parameters.
@@ -69,4 +71,4 @@ The plugin has been testes in the following platforms:
 
 - Java 7
 - Eclipse Mars (4.5)
-- Windows 7 
+- Windows 7

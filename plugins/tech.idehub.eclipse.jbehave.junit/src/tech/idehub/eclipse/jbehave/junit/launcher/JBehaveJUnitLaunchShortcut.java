@@ -24,6 +24,7 @@ import org.eclipse.ui.IFileEditorInput;
 
 import tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache;
 import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
+import tech.idehub.eclipse.jbehave.junit.project.ProjectPreferencePage;
 
 
 public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
@@ -93,9 +94,21 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 
 	protected ILaunchConfigurationWorkingCopy createLaunchConfiguration(String projectName, StoryPath storyPath) throws CoreException {
 
-		String mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_RUNNER_CLASS);
-		String storyPathSysProperty = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY);
-		String additionalJvmOptions = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_ADDITIONAL_JVM_OPTIONS);
+		String projectRunnerClasskey = ProjectPreferencePage.PREFERENCE_KEY_PREFIX.concat(PreferenceConstants.P_RUNNER_CLASS.concat(projectName));
+		String mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(projectRunnerClasskey);
+		String storyPathSysProperty = null;
+		String additionalJvmOptions = null;
+		//Use project specific properties if present.
+		if (mainTypeQualifiedName != null && mainTypeQualifiedName.trim().length() > 0) {
+			storyPathSysProperty = JBehaveRunnerPreferenceCache.get(ProjectPreferencePage.PREFERENCE_KEY_PREFIX.concat(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY.concat(projectName)));
+			additionalJvmOptions = JBehaveRunnerPreferenceCache.get(ProjectPreferencePage.PREFERENCE_KEY_PREFIX.concat(PreferenceConstants.P_ADDITIONAL_JVM_OPTIONS.concat(projectName)));
+		} else {
+			mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_RUNNER_CLASS);
+			storyPathSysProperty = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY);
+			additionalJvmOptions = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_ADDITIONAL_JVM_OPTIONS);
+		}
+
+
 
 		final String testName = storyPath.displayName();
 		final String containerHandleId = "";
