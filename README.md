@@ -18,7 +18,7 @@ If not, please help your self. Google it.
 ![](docs/images/run-from-context.png)
 
 ##  Installation ##
-[Get](#) a zipped file and install it into eclipse from a local update archive.
+[Get](https://github.com/obeimnet/releases/blob/master/tech.idehub.eclipse.jbehave.update-site-1.0.0.RC1.zip) a zipped file and install it into eclipse from a local update archive.
 
 ## How it Works ##
 
