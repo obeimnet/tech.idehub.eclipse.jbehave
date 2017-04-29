@@ -64,7 +64,7 @@ This plugin allows running JBehave story files as JUnit tests using context menu
 
 ## Supported Platforms ##
 
-The plugin has been testes in the following platforms:
+The plugin has been tested in the following platforms:
 
 - Java 7
 - Eclipse Mars (4.5)
