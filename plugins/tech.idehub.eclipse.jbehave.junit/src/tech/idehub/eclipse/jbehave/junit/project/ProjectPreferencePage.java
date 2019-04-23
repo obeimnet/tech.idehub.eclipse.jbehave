@@ -25,7 +25,6 @@ import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants.StoryNa
 
 public class ProjectPreferencePage extends PropertyPage implements IWorkbenchPropertyPage {
 
-	private IProject project;
 	private String projectName;
 	private Composite parent;
 	public static final String PREFERENCE_KEY_PREFIX = Activator.PLUGIN_ID.concat(Activator.VERSION);
@@ -41,9 +40,8 @@ public class ProjectPreferencePage extends PropertyPage implements IWorkbenchPro
 	protected Control createContents(Composite parent) {
 		IAdaptable adaptable = getElement();
 		if (adaptable.getAdapter(IProject.class) != null) {
-			project = (IProject) adaptable;
-			projectName = project.getName();
-		    return createTable(parent, project);
+			projectName = adaptable.getAdapter(IProject.class).getName();
+		    return createTable(parent);
 		}
 		return null;
 	}
@@ -88,7 +86,7 @@ public class ProjectPreferencePage extends PropertyPage implements IWorkbenchPro
 		//updateApplyButton();
 	}
 
-	private Control createTable(Composite parent, IProject project) {
+	private Control createTable(Composite parent) {
 		this.parent = parent;
 
 		runnerClassField = new StringFieldEditor(PreferenceConstants.P_RUNNER_CLASS.concat(projectName), "&JBehave JUnit Story Runner Class:", parent);

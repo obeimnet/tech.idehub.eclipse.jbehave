@@ -3,14 +3,6 @@
 <plugin>
 
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            name="JBehave JUnit Runner"
-            class="tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferencePage"
-            id="tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferencePage">
-      </page>
-   </extension>
-   <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
             class="tech.idehub.eclipse.jbehave.junit.preferences.PreferenceInitializer">
