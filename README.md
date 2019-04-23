@@ -42,9 +42,10 @@ This plugin allows running JBehave story files as JUnit tests using context menu
 - After installation, right click on a project containing JBehave stories and open project properties window
 
 - On the project properties page, locate 'JBehave JUnit Runner'.
-![](docs/images/jbehave-junit-run-debug-configuration.png)
-- Now you will need to enter yuor custom JBehave JUnit runner class.
+
 ![](docs/images/jbehave-junit-run-debug-configuration-2.png)
+
+- Enter custom JBehave JUnit runner class (e.g. net.springhub.examples.petclinic.jbehave.GenericSpringJBehaveStoryRunner)
 
 - There are three options for Story Path Resolution Strategy.
 - Using example story file  located in *c:/myWorkspace/myProject1/src/test/resources/myStories/group1/blah.story* :
