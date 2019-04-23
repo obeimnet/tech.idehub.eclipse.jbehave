@@ -15,7 +15,7 @@ This plugin allows running JBehave story files as JUnit tests using context menu
 ![](docs/images/run-from-context.png)
 
 ##  Installation ##
-[Get](https://github.com/obeimnet/releases/blob/master/tech.idehub.eclipse.jbehave.update-site-1.0.0.RC2.zip?raw=true) a zipped file and install it into eclipse from a local update archive.
+[Get](https://github.com/obeimnet/releases/blob/master/tech.idehub.eclipse.jbehave.update-site-2.0.0.RC1.zip?raw=true) a zipped file and install it into eclipse from a local update archive.
 
 ## How it Works ##
 
@@ -39,11 +39,9 @@ This plugin allows running JBehave story files as JUnit tests using context menu
 
 ## Configuring the Plugin ##
 
-- After installation, you have the option of setting preferences at two scopes:
-- Workspace scope (applies to all projects) go to Windows -> Preferences page.
-- Project scope, use project properties window
+- After installation, right click on a project containing JBehave stories and open project properties window
 
-- On the Preferences (or project properties) page, locate 'JBehave JUnit Runner'.
+- On the project properties page, locate 'JBehave JUnit Runner'.
 ![](docs/images/jbehave-junit-run-debug-configuration.png)
 - Now you will need to enter yuor custom JBehave JUnit runner class.
 ![](docs/images/jbehave-junit-run-debug-configuration-2.png)
@@ -66,6 +64,6 @@ This plugin allows running JBehave story files as JUnit tests using context menu
 
 The plugin has been tested in the following platforms:
 
-- Java 7
-- Eclipse Mars (4.5)
-- Windows 7
+- Java 8
+- Eclipse Photon
+- Windows 10
