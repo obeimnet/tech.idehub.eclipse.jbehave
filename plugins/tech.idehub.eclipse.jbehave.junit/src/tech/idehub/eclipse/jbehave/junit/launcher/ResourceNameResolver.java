@@ -17,8 +17,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 
 import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
 
+//TODO investigate if maven nature could be used to find maven standard folders
 class ResourceNameResolver {
-
 
 	private static final String SRC_FOLDER = "src";
 	private static final String SRC_MAIN_FOLDER = "src/main";
@@ -50,20 +50,21 @@ class ResourceNameResolver {
 		if (path == null) {
 			return null;
 		}
-
+		
+		String projectName = resource.getProject().getName();
 		PreferenceConstants.StoryNameResolverType storyNameResolverType = PreferenceConstants.StoryNameResolverType
 				.valueOf(getStoryFileResolutionStrategy(resource.getProject().getName()));
-
+		
 		StoryPath storyPath = null;
 		switch (storyNameResolverType) {
 		case ABSOLUTE_PATH:
-			storyPath = resolveAbsolutePath(resource);
+			storyPath = resolveAbsolutePath(resource, projectName);
 			break;
 		case PROJECT_RELATIVE:
-			storyPath = resolveProjectRelative(resource);
+			storyPath = resolveProjectRelative(resource, projectName);
 			break;
 		case DEFAULT:
-			storyPath = resolveDefault(resource);
+			storyPath = resolveDefault(resource, projectName);
 		}
 
 		if ((storyPath != null) && storyPath.isFolder()) {
@@ -72,7 +73,7 @@ class ResourceNameResolver {
 
 		//remove leading / from story path
 		if ((storyPath != null)  && (storyPath.getPath().startsWith("/"))) {
-			return new StoryPath(storyPath.getPath().substring(1), storyPath.isFolder(), getStoryFileExtention());
+			return new StoryPath(storyPath.getPath().substring(1), storyPath.isFolder(), getStoryFileExtention(resource.getProject().getName()));
 		}
 
 
@@ -109,7 +110,7 @@ class ResourceNameResolver {
 		return null;
 	}
 
-	private static StoryPath resolveDefault(IResource resource) {
+	private static StoryPath resolveDefault(IResource resource, String projectName) {
 
 		String resourceName = defaultStoryFilePath(resource);
 		if (resourceName == null || resourceName.isEmpty()) {
@@ -118,31 +119,31 @@ class ResourceNameResolver {
 
 		switch (resource.getType()) {
 			case IResource.FILE:
-				return new StoryPath(resourceName, false, getStoryFileExtention());
+				return new StoryPath(resourceName, false, getStoryFileExtention(projectName));
 			case IResource.FOLDER:
-				return new StoryPath(resourceName, true, getStoryFileExtention());
+				return new StoryPath(resourceName, true, getStoryFileExtention(projectName));
 		}
 
 		return null;
 	}
 
-	private static StoryPath resolveAbsolutePath(IResource resource) {
+	private static StoryPath resolveAbsolutePath(IResource resource, String projectName) {
 
 		switch (resource.getType()) {
 		case IResource.FILE:
-			return new StoryPath(resource.getRawLocation().toString(), false, getStoryFileExtention());
+			return new StoryPath(resource.getRawLocation().toString(), false, getStoryFileExtention(projectName));
 		case IResource.FOLDER:
-			return new StoryPath(resource.getRawLocation().toString(), true, getStoryFileExtention());
+			return new StoryPath(resource.getRawLocation().toString(), true, getStoryFileExtention(projectName));
 		}
 		return null;
 	}
 
-	private static StoryPath resolveProjectRelative(IResource resource) {
+	private static StoryPath resolveProjectRelative(IResource resource, String projectName) {
 		switch (resource.getType()) {
 		case IResource.FILE:
-			return new StoryPath(resource.getProjectRelativePath().toString(), false, getStoryFileExtention());
+			return new StoryPath(resource.getProjectRelativePath().toString(), false, getStoryFileExtention(projectName));
 		case IResource.FOLDER:
-			return new StoryPath(resource.getProjectRelativePath().toString(), true, getStoryFileExtention());
+			return new StoryPath(resource.getProjectRelativePath().toString(), true, getStoryFileExtention(projectName));
 		}
 		return null;
 	}

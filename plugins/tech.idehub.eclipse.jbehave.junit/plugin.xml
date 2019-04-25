@@ -67,7 +67,6 @@
               		value="org.eclipse.jdt.core.javanature"/>
     				</adapt>         
 				</enabledWhen>
-        </page>
-        
+        </page>    
   </extension>
 </plugin>

@@ -69,7 +69,7 @@ public class JBehaveJUnitLaunchableTester extends PropertyTester {
 			return false;
 		}
 
-		String storyFileExtention = getStoryFileExtention();
+		String storyFileExtention = getStoryFileExtention(resource.getProject().getName());
 
 		if (resource instanceof IFile) {
 			IFile file = (IFile) resource;

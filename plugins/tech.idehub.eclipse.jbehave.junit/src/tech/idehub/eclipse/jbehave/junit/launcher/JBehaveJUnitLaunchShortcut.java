@@ -1,6 +1,11 @@
 
 package tech.idehub.eclipse.jbehave.junit.launcher;
 
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getAdditionalJvmOptions;
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getJUnitVersion;
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getRunnerClass;
+import static tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache.getStoryPathSystemProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +27,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
-import tech.idehub.eclipse.jbehave.junit.preferences.JBehaveRunnerPreferenceCache;
 import tech.idehub.eclipse.jbehave.junit.preferences.PreferenceConstants;
-import tech.idehub.eclipse.jbehave.junit.project.ProjectPreferencePage;
 
 
 public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
@@ -34,6 +37,7 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 	private static final String JUNIT_PLUGIN_ID= "org.eclipse.jdt.junit";
 
 	private static final String JUNIT4_TEST_KIND_ID = "org.eclipse.jdt.junit.loader.junit4";
+	private static final String JUNIT5_TEST_KIND_ID = "org.eclipse.jdt.junit.loader.junit5";
 	private static final String ATTR_TEST_RUNNER_KIND = JUNIT_PLUGIN_ID + ".TEST_KIND";
 	private static final String ATTR_KEEPRUNNING = JUNIT_PLUGIN_ID + ".KEEPRUNNING_ATTR";
 	private static final String ATTR_TEST_CONTAINER= JUNIT_PLUGIN_ID +".CONTAINER";
@@ -94,21 +98,10 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 
 	protected ILaunchConfigurationWorkingCopy createLaunchConfiguration(String projectName, StoryPath storyPath) throws CoreException {
 
-		String projectRunnerClasskey = ProjectPreferencePage.PREFERENCE_KEY_PREFIX.concat(PreferenceConstants.P_RUNNER_CLASS.concat(projectName));
-		String mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(projectRunnerClasskey);
-		String storyPathSysProperty = null;
-		String additionalJvmOptions = null;
-		//Use project specific properties if present.
-		if (mainTypeQualifiedName != null && mainTypeQualifiedName.trim().length() > 0) {
-			storyPathSysProperty = JBehaveRunnerPreferenceCache.get(ProjectPreferencePage.PREFERENCE_KEY_PREFIX.concat(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY.concat(projectName)));
-			additionalJvmOptions = JBehaveRunnerPreferenceCache.get(ProjectPreferencePage.PREFERENCE_KEY_PREFIX.concat(PreferenceConstants.P_ADDITIONAL_JVM_OPTIONS.concat(projectName)));
-		} else {
-			mainTypeQualifiedName = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_RUNNER_CLASS);
-			storyPathSysProperty = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_STORY_PATH_SYSTEM_PROPERTY);
-			additionalJvmOptions = JBehaveRunnerPreferenceCache.get(PreferenceConstants.P_ADDITIONAL_JVM_OPTIONS);
-		}
-
-
+		String mainTypeQualifiedName = getRunnerClass(projectName);
+		String storyPathSysProperty = getStoryPathSystemProperty(projectName);
+		String additionalJvmOptions = getAdditionalJvmOptions(projectName);
+		String junitVersion = getJUnitVersion(projectName);
 
 		final String testName = storyPath.displayName();
 		final String containerHandleId = "";
@@ -120,7 +113,11 @@ public class JBehaveJUnitLaunchShortcut implements ILaunchShortcut2 {
 		wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, projectName);
 		wc.setAttribute(ATTR_KEEPRUNNING, false);
 		wc.setAttribute(ATTR_TEST_CONTAINER, containerHandleId);
-		wc.setAttribute(ATTR_TEST_RUNNER_KIND, JUNIT4_TEST_KIND_ID);
+		if (PreferenceConstants.JUNIT4.equals(junitVersion)) {
+			wc.setAttribute(ATTR_TEST_RUNNER_KIND, JUNIT4_TEST_KIND_ID);
+		} else {
+			wc.setAttribute(ATTR_TEST_RUNNER_KIND, JUNIT5_TEST_KIND_ID);
+		}	
 		String jvmArguments = "-D" + storyPathSysProperty + "=" + storyPath.jvmArgStoryPath() + " " + additionalJvmOptions;
 		wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS, jvmArguments);
 
